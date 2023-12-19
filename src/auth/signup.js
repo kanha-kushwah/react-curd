@@ -1,8 +1,15 @@
 import React,{useState} from 'react'
 import { Link,useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import { useApiLoader } from '../ApiLoaderContext';
+import Loader from '../Loader';
+import './auth.css';
+import Banner from '../images/banner.jpg'
 
 function Signup() {
+
+  const { loading,startLoading, stopLoading } = useApiLoader();
+
 const Navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -27,6 +34,7 @@ const Navigate = useNavigate();
     e.preventDefault();
 
     try {
+      startLoading();
       const response = await fetch('http://localhost:4000/api/auth/signup', {
         method: 'POST',
         headers: {
@@ -41,10 +49,13 @@ const Navigate = useNavigate();
         sessionStorage.setItem('signupSuccess', 'true');
         console.log('Data sent successfully');
       } else {
+   
         toast.error('Signup failed. Please check your credentials.');
       }
     } catch (error) {
       toast.error('An error occurred. Please try again later.');
+    }finally{
+      stopLoading();
     }
   };
 
@@ -59,10 +70,17 @@ const Navigate = useNavigate();
   };
 
   return (
-    <div>  <div className='container py-4' style={myStyles}>
+    <div className='containerfluid' style={myStyles}> 
+   
+      <div className='container py-4'>
+      {loading && <Loader />}
       <ToastContainer/>
     <div className='row'>
-      <div className='col-md-12'>
+
+<div className='col-md-6 col-12 '>
+<img src={Banner} alt='banner' width={'100%'}/>
+</div>
+      <div className='col-md-6 col-12 px-4'>
       <form onSubmit={handleSubmit}>
 
   <div className="form-group">
@@ -85,7 +103,7 @@ const Navigate = useNavigate();
 
 
   <div className="form-group">
-    <label htmlFor="email">username</label>
+    <label htmlFor="email">email</label>
     <input
       type="email"
       className="form-control"
@@ -143,11 +161,14 @@ const Navigate = useNavigate();
 </form>
 
 <Link  to={'/login'} >
-<button>signup </button>
+<button>login </button>
 </Link>
       </div>
+
     </div>
-  </div></div>
+  </div>
+  </div>
+  
   )
 }
 

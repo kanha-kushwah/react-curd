@@ -1,21 +1,26 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import { useApiLoader } from '../ApiLoaderContext';
+import Loader from '../Loader';
+
 
  const Useradd = () => {
 
+  const { loading,startLoading, stopLoading } = useApiLoader();
   const [myString, setMyString] = useState("121");
   const [myBoolean, setMyBoolean] = useState(true);
-
-
-  const [formData, setFormData] = useState({
+  
+  const initialFormData = {
     firstname: '',
     lastname: '',
     mobile: '',
     email: '',
     password: '',
-  
-  }
-  );
+  };
+
+    const [formData, setFormData] = useState(initialFormData);
+
  
   const myStyles = {
     background: '#000',
@@ -52,6 +57,8 @@ setMyString(` ${isChecked}`)
     e.preventDefault();
 
     try {
+      startLoading();
+
       const response = await fetch('http://localhost:4000/api/adduser', {
         method: 'POST',
         headers: {
@@ -61,18 +68,19 @@ setMyString(` ${isChecked}`)
       });
 
       if (response.ok) {
-        
-
-        alert('data saved sucess !')
-        setFormData('');
+        setFormData(initialFormData);
         console.log('Data sent successfully');
       } else {
-        console.error('Failed to send data');
+        setFormData(initialFormData);
+        toast.error('Failed to send data');
       }
     } catch (error) {
-      console.error('Error:', error);
+      toast.error('An error occurred. Please try again later.');
+    } finally {
+      stopLoading();
     }
   };
+
 
   const a = {
     backgroundColor: 'red',
@@ -88,8 +96,12 @@ setMyString(` ${isChecked}`)
   };
 
   return (
+    
     <div>
+<ToastContainer/>
+{loading && <Loader />}
       <div className='container py-4' style={myStyles}>
+        
         <div className='row'>
           <div className='col-md-12'>
           <form onSubmit={handleSubmit}>

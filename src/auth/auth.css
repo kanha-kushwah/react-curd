@@ -1,0 +1,9 @@
+.containerfluid {
+    height: calc(100vh - 0px) !important;
+    align-items: center !important;
+    display: flex;
+}
+.row {
+    align-items: center;
+    background: #011230;
+}

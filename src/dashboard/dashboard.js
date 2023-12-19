@@ -1,11 +1,13 @@
 import React ,{useEffect, useState } from 'react'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
 
 function Dashboard() {
 
+const navigate = useNavigate();
 
   const signupSuccess = sessionStorage.getItem('token');
 
@@ -70,6 +72,13 @@ function Dashboard() {
         }));
       };
 
+const Logut = () => {
+  sessionStorage.clear();
+    navigate('/login')
+  
+}
+
+
 const myStyles = {
     background: '#000'
 }
@@ -85,7 +94,8 @@ const form = {
 
 <ToastContainer/>
 
-        
+        <button onClick={() => Logut()}>Logut </button>
+
 <table className="table">
   <thead>
     <tr>

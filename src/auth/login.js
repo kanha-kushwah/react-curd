@@ -1,9 +1,14 @@
 import React,{useState} from 'react'
 import { Link,useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
+import { useApiLoader } from '../ApiLoaderContext';
+import Loader from '../Loader';
+import './auth.css';
+import Banner from '../images/banner.jpg'
 
 function Login() {
 
+  const { loading,startLoading, stopLoading } = useApiLoader();
   const Navigate = useNavigate();
   const signupSuccess = sessionStorage.getItem('signupSuccess');
 
@@ -31,6 +36,7 @@ function Login() {
     e.preventDefault();
 
     try {
+      startLoading()
       const response = await fetch('http://localhost:4000/api/auth/login', {
         method: 'POST',
         headers: {
@@ -65,6 +71,8 @@ function Login() {
     } catch (error) {
       toast.error('An error occurred. Please try again later.');
 
+    }finally{
+      stopLoading()
     }
   };
 
@@ -77,18 +85,27 @@ function Login() {
     border: '1px solid black',
     padding: '20px',
     color: '#fff'
+    
   };
 
   return (
     
     <div> 
+      {loading && <Loader />}
               <ToastContainer />
 
-       <div className='container py-4' style={myStyles}>
-    <div className='row'>
-      <div className='col-md-12'>
-      <form onSubmit={handleSubmit}>
 
+<div className='containerfluid' style={myStyles}> 
+       <div className='container py-4' >
+    <div className='row'>
+   
+
+
+<div className='col-md-6 col-12 '>
+<img src={Banner} alt='banner' width={'100%'}/>
+</div>
+<div className='col-md-6 col-12 px-4'>
+      <form onSubmit={handleSubmit}>
   <div className="form-group">
     <label htmlFor="email">Email address</label>
     <input
@@ -132,8 +149,11 @@ function Login() {
 <button>signup </button>
 </Link>
       </div>
+
     </div>
   </div></div>
+
+  </div>
   )
 }
 
