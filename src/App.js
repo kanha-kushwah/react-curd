@@ -8,9 +8,7 @@ import Useradd from './dashboard/useradd';
 import { ApiLoaderProvider } from './ApiLoaderContext';
 import AuthGuard from './auth/auth';
 import { ToastContainer } from 'react-toastify';
-import Product from './components/products/product';
-
-
+import Product from './products/product';
 
 function App() {
   return (

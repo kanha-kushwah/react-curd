@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
- function header() {
+ function Header() {
   return (
     <div>
 <div className='containerfulid bg-light' >
@@ -54,4 +54,4 @@ import { Link } from 'react-router-dom'
   )
 }
 
-export default header
+export default Header

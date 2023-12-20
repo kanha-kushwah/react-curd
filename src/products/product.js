@@ -1,9 +1,9 @@
 import React from 'react'
-import Header from '../Shared/header/header'
-import Footer from '../Shared/footer/footer'
 import "./product.css";
+import Header from '../Shared/header/header';
+import Footer from '../Shared/footer/footer';
 
-function product() {
+function Product() {
   return (
     <>
     
@@ -132,8 +132,8 @@ function product() {
 
     <Footer/>
     </>
-  
+
   )
 }
 
-export default product
+export default Product
