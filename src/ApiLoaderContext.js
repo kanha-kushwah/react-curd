@@ -1,4 +1,3 @@
-// ApiLoaderContext.js
 import { createContext, useContext, useState } from 'react';
 
 const ApiLoaderContext = createContext();

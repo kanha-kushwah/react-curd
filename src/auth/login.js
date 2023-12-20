@@ -1,31 +1,25 @@
-import React,{useState} from 'react'
-import { Link,useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import { useApiLoader } from '../ApiLoaderContext';
-import Loader from '../Loader';
-import './auth.css';
-import Banner from '../images/banner.jpg'
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import { useApiLoader } from "../ApiLoaderContext";
+import Loader from "../Loader";
+import "./auth.css";
+import Banner from "../images/banner.jpg";
+import axios from "axios";
+
 
 function Login() {
-
-  const { loading,startLoading, stopLoading } = useApiLoader();
+  const { loading, startLoading, stopLoading } = useApiLoader();
   const Navigate = useNavigate();
-  const signupSuccess = sessionStorage.getItem('signupSuccess');
-
-  if (signupSuccess === 'true') {
-    toast("login sucess")
-    sessionStorage.removeItem('signupSuccess');
-}
+ 
   const [formData, setFormData] = useState({
-    username: '',
-    password: '',
-  })
-
-
+    username: "",
+    password: "",
+  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name,value)               
+    console.log(name, value);
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
@@ -34,127 +28,106 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
-      startLoading()
-      const response = await fetch('http://localhost:4000/api/auth/login', {
-        method: 'POST',
+      startLoading();
+      const response = await axios.post("http://localhost:4000/api/auth/login", formData, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
       });
-
-      if (response.ok) {
-        const data = await response.json();
-        const token = data.token;
-
-        // Save the token in session storage
-        sessionStorage.setItem('token', token);
-
-        // Make subsequent authenticated requests
-        const dashboardResponse = await fetch('http://localhost:4000/api/dashboard', {
+  
+      if (response.status === 200) {
+        const token = response.data.token;
+  
+        sessionStorage.setItem("token", token);
+  
+        const dashboardResponse = await axios.get("http://localhost:4000/api/dashboard", {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         });
-
-        if (dashboardResponse.ok) {
-          Navigate('/dashboard');
-          console.log('Token saved successfully');
+  
+        if (dashboardResponse.status === 200) {
+          Navigate("/dashboard");
+          toast.success('Login successful! Welcome.');
+          console.log("Token saved successfully");
         }
-
       } else {
-             toast.error('Login failed. Please check your credentials.');
-
+        toast.error("Login failed. Please check your credentials.");
       }
     } catch (error) {
-      toast.error('An error occurred. Please try again later.');
-
-    }finally{
-      stopLoading()
+      toast.error("An error occurred. Please try again later.");
+    } finally {
+      stopLoading();
     }
   };
 
-
-
-
   const myStyles = {
-    background: '#000',
-    fontSize: '16px',
-    border: '1px solid black',
-    padding: '20px',
-    color: '#fff'
-    
+    background:' linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%)',
+    fontSize: "16px",
+    border: "1px solid black",
+    padding: "20px",
+    color: "#fff",
   };
 
   return (
-    
-    <div> 
+    <div>
       {loading && <Loader />}
-              <ToastContainer />
+      <ToastContainer />
 
+      <div className="containerfluid" style={myStyles}>
+        <div className="container py-4">
+          <div className="row rows1">
+            <div className="col-md-6 col-12  bg-white">
+              <img src={Banner} alt="banner" width={"100%"} />
+            </div>
+            <div className="col-md-6 col-12 px-4">
+              <form onSubmit={handleSubmit}>
+                <div className="form-group mb-3" >
+                  <label htmlFor="email">Email address</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="username"
+                    name="username"
+                    aria-describedby="emailHelp"
+                    placeholder="Enter email"
+                    value={formData.username}
+                    onChange={handleChange}
+                  />
+                 
+                </div>
 
-<div className='containerfluid' style={myStyles}> 
-       <div className='container py-4' >
-    <div className='row'>
-   
+                <div className="form-group mb-3">
+                  <label htmlFor="password">Password</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    value={formData.password}
+                    onChange={handleChange}
+                  />
+                </div>
 
+                <div className="mt-3">
+                  <button type="submit" className="btn btn-primary">
+                    submit
+                  </button>
+                </div>
+              </form>
 
-<div className='col-md-6 col-12 '>
-<img src={Banner} alt='banner' width={'100%'}/>
-</div>
-<div className='col-md-6 col-12 px-4'>
-      <form onSubmit={handleSubmit}>
-  <div className="form-group">
-    <label htmlFor="email">Email address</label>
-    <input
-      type="text"
-      className="form-control"
-      id="username"
-      name="username"
-      aria-describedby="emailHelp"
-      placeholder="Enter email"
-      value={formData.username}
-      onChange={handleChange}
-    />
-    <small id="emailHelp" className="form-text text-muted">
-      We'll never share your email with anyone else.
-    </small>
-  </div>
-
-  <div className="form-group">
-    <label htmlFor="password">Password</label>
-    <input
-      type="password"
-      className="form-control"
-      id="password"
-      name="password"
-      placeholder="Password"
-      value={formData.password}
-      onChange={handleChange}
-    />
-  </div>
-
-<div className='p-3'>
-
-
-<button type="submit" className="btn btn-primary">submit</button>
-
-</div>
-
-</form>
-
-<Link  to={'/'} >
-<button>signup </button>
-</Link>
+              <Link  to={"/signup"}>
+                <button className="mt-3 btn btn-danger"> signup </button>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
-
     </div>
-  </div></div>
-
-  </div>
-  )
+  );
 }
 
-export default Login
+export default Login;

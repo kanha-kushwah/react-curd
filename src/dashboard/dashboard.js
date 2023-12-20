@@ -16,7 +16,6 @@ const navigate = useNavigate();
     sessionStorage.removeItem('signupSuccess');
 }
 
-
     const [items, setItems] = useState([]);
     const [updatedData, setUpdatedData] = useState({});
 
@@ -37,10 +36,9 @@ const navigate = useNavigate();
       const handledelete = async (itemId) => {
         
         try {
-            // Make a DELETE request to delete the item
-            const response = await axios.delete(`http://localhost:4000/api/items/${itemId}`); // Replace with your actual API endpoint
-            console.log(response.data); // Log the deleted item
-            // Optionally, update the state to reflect the deletion
+           
+            const response = await axios.delete(`http://localhost:4000/api/items/${itemId}`);
+            console.log(response.data); 
             setItems(items.filter(item => item._id !== itemId));
           } catch (error) {
             console.error('Error deleting item:', error);
@@ -75,7 +73,7 @@ const navigate = useNavigate();
 const Logut = () => {
   sessionStorage.clear();
     navigate('/login')
-  
+toast.error('You are logout !')
 }
 
 
@@ -87,7 +85,6 @@ const form = {
   border: 'none',
   pointerevents: 'none'
 }
-
 
   return (
     <div className='container py-4'  style={myStyles}>

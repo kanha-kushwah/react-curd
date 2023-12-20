@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { useApiLoader } from '../ApiLoaderContext';
 import Loader from '../Loader';
-
+import axios from 'axios';
 
  const Useradd = () => {
 
@@ -12,7 +12,7 @@ import Loader from '../Loader';
   const [myBoolean, setMyBoolean] = useState(true);
   
   const initialFormData = {
-    firstname: '',
+    firstname: '' ,
     lastname: '',
     mobile: '',
     email: '',
@@ -53,21 +53,20 @@ setMyString(` ${isChecked}`)
     }));
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     try {
       startLoading();
-
-      const response = await fetch('http://localhost:4000/api/adduser', {
-        method: 'POST',
+  
+      const response = await axios.post('http://localhost:4000/api/adduser', formData, {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
       });
-
-      if (response.ok) {
+  
+      if (response.status === 200) {
         setFormData(initialFormData);
         console.log('Data sent successfully');
       } else {
@@ -80,6 +79,7 @@ setMyString(` ${isChecked}`)
       stopLoading();
     }
   };
+  
 
 
   const a = {

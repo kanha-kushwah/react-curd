@@ -3,10 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import './auth.css';
 const AuthGuard = ({ children }) => {
     
-  // You can replace this with your actual authentication logic
+
   const isAuthenticated = !!sessionStorage.getItem('token');
 
-  console.log('hey   is check',sessionStorage.getItem('token'))
+  console.log('is check',sessionStorage.getItem('token'))
 
 
   const navigate = useNavigate();
