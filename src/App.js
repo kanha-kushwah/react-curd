@@ -16,7 +16,9 @@ function App() {
     <>
     <ToastContainer/>
      <ApiLoaderProvider>
+   
   <BrowserRouter>
+  
      <Routes>
         <Route path="user" element={<Useradd />} />
         <Route path="login" element={<Login />} />
@@ -25,7 +27,9 @@ function App() {
         <Route path="*" element={<Error />} />
         <Route path="/" element={<Product />} /> 
       </Routes>
+    
       </BrowserRouter>
+     
       </ApiLoaderProvider>
     </>
   );
