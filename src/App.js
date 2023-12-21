@@ -16,7 +16,7 @@ function App() {
     <>
     <ToastContainer/>
      <ApiLoaderProvider>
-  <BrowserRouter basename="/subdirectory">
+  <BrowserRouter>
      <Routes>
         <Route path="user" element={<Useradd />} />
         <Route path="login" element={<Login />} />
