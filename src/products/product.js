@@ -13,9 +13,9 @@ function Product() {
 
 <div class="container bg-white">
     <nav class="navbar navbar-expand-md navbar-light bg-white">
-        <div class="container-fluid p-0"> <a class="navbar-brand text-uppercase fw-800" href="#"><span class="border-red pe-2">New</span>Product</a> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNav" aria-controls="myNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="fas fa-bars"></span> </button>
+        <div class="container-fluid p-0"> <p class="navbar-brand text-uppercase fw-800" ><span class="border-red pe-2">New</span>Product</p> <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNav" aria-controls="myNav" aria-expanded="false" aria-label="Toggle navigation"> <span class="fas fa-bars"></span> </button>
             <div class="collapse navbar-collapse" id="myNav">
-                <div class="navbar-nav ms-auto"> <a class="nav-link active" aria-current="page" href="#">All</a> <a class="nav-link" href="#">Women's</a> <a class="nav-link" href="#">Men's</a> <a class="nav-link" href="#">Kid's</a> <a class="nav-link" href="#">Accessories</a> <a class="nav-link" href="#">Cosmetics</a> </div>
+                <div class="navbar-nav ms-auto"> <p class="nav-link active" aria-current="page" >All</p> <p class="nav-link" >Women's</p> <p class="nav-link" >Men's</p> <p class="nav-link">Kid's</p> <p class="nav-link">Accessories</p> <p class="nav-link" >Cosmetics</p> </div>
             </div>
         </div>
     </nav>
